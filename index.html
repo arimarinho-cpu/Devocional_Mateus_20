@@ -186,10 +186,40 @@ footer{max-width:720px;text-align:center;font-family:var(--ui);font-size:.8rem;c
   .p-vol{display:none}
   .player{right:16px}
 }
+.dl-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+.dl-btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-size:.86rem;font-weight:600;text-decoration:none;border-radius:999px;padding:11px 20px;border:1px solid var(--wine);cursor:pointer;line-height:1}
+.dl-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.dl-primary{background:var(--wine);color:var(--paper)}
+.dl-primary:hover{filter:brightness(1.08)}
+.dl-ghost{background:transparent;color:var(--wine)}
+.dl-ghost:hover{background:var(--wine-soft)}
+a.tool{display:inline-flex;align-items:center;text-decoration:none}
+footer .dl-row{justify-content:center;margin:0 0 18px}
+@page{size:A4;margin:18mm 17mm 20mm}
 @media print{
-  #welcome,.player,.toc,.toc-toggle,#progress{display:none!important}
-  .layout{display:block}
-  body{background:#fff;color:#000}
+  :root,:root[data-theme="dark"],:root:not([data-theme="light"]){
+    --bg:#fff; --bg-2:#f4efe6; --paper:#fbf8f2; --ink:#1e1916; --ink-2:#4a3f38; --muted:#7a6d60;
+    --wine:#7a2e2e; --wine-soft:#7a2e2e12; --gold:#9a7428; --gold-soft:#9a742822; --line:#d8ccb6; --shadow:none; --fs:11pt;
+  }
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #welcome,.player,.toc,.toc-toggle,#progress,.dl-row,.no-print{display:none!important}
+  html,body{background:#fff}
+  body{line-height:1.6}
+  .layout{display:block;max-width:none;padding:0;margin:0}
+  main{padding:0}
+  .hero{padding:40mm 0 0;border:0;min-height:230mm;break-after:page}
+  .sum-card{box-shadow:none;break-inside:avoid}
+  .sum-card:hover{transform:none}
+  .chapter{max-width:none;padding:0 0 6mm}
+  .chapter + .chapter{break-before:page}
+  .sec-head{margin-bottom:8mm;break-after:avoid}
+  .sec-num{font-size:34pt}
+  .chapter>p,.chapter .labeled{orphans:3;widows:3}
+  .scripture,.citation,.note,.prayer,.card,.cards,.sc-obs{break-inside:avoid}
+  .scripture{box-shadow:none}
+  .ref{white-space:normal}
+  a{text-decoration:none}
+  footer{border-top:1px solid var(--line);margin-top:8mm;padding-top:5mm;break-inside:avoid}
 }
 </style>
 </head>
@@ -226,6 +256,7 @@ footer{max-width:720px;text-align:center;font-family:var(--ui);font-size:.8rem;c
       <button class="tool" id="fontDown" type="button" aria-label="Diminuir fonte">A−</button>
       <button class="tool" id="fontUp" type="button" aria-label="Aumentar fonte">A+</button>
       <button class="tool" id="themeBtn" type="button" aria-label="Alternar tema claro ou escuro">Tema</button>
+      <a class="tool" href="estudo-mateus-20.pdf" download aria-label="Baixar o estudo em PDF">PDF</a>
       <button class="tool" id="topBtn" type="button" aria-label="Voltar ao início">Topo</button>
     </div>
   </aside>
@@ -237,6 +268,7 @@ footer{max-width:720px;text-align:center;font-family:var(--ui);font-size:.8rem;c
       <h1>A Grande Inversão <em>do Reino</em></h1>
       <p class="subtitle">Graça, Cruz, Serviço e Compaixão</p>
       <p class="byline">Arisvaldo Marinho Cunha</p>
+      <div class="dl-row"><a class="dl-btn dl-primary" href="estudo-mateus-20.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 19h16"/></svg>Baixar o estudo em PDF</a><button class="dl-btn dl-ghost js-print" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4v-7h16v7h-2M8 14h8v7H8z"/></svg>Imprimir</button></div>
       <p class="scenes-note">O capítulo se desenvolve em <b>quatro cenas</b>: o Tópico II corresponde à <b>Cena I</b>, o Tópico III à <b>Cena II</b>, o Tópico IV à <b>Cena III</b> e o Tópico V à <b>Cena IV</b>.</p>
       <div class="sum-grid"><a class="sum-card" href="#introducao"><span class="sum-top"><span class="sum-num">I</span></span><span class="sum-title">Introdução</span><span class="sum-sub">A grande inversão do Reino em marcha para Jerusalém</span></a><a class="sum-card" href="#vinha"><span class="sum-top"><span class="sum-num">II</span><span class="sum-scene">Cena I</span></span><span class="sum-title">A parábola dos trabalhadores da vinha</span><span class="sum-ref">Mt 20.1–16</span><span class="sum-sub">A graça que rejeita o mérito</span></a><a class="sum-card" href="#paixao"><span class="sum-top"><span class="sum-num">III</span><span class="sum-scene">Cena II</span></span><span class="sum-title">A terceira predição da paixão</span><span class="sum-ref">Mt 20.17–19</span><span class="sum-sub">A glória que passa pela cruz</span></a><a class="sum-card" href="#zebedeu"><span class="sum-top"><span class="sum-num">IV</span><span class="sum-scene">Cena III</span></span><span class="sum-title">O pedido dos filhos de Zebedeu</span><span class="sum-ref">Mt 20.20–28</span><span class="sum-sub">A grandeza que se mede pelo serviço</span></a><a class="sum-card" href="#cegos"><span class="sum-top"><span class="sum-num">V</span><span class="sum-scene">Cena IV</span></span><span class="sum-title">Os dois cegos de Jericó</span><span class="sum-ref">Mt 20.29–34</span><span class="sum-sub">A compaixão que acolhe o clamor e conduz ao seguimento</span></a><a class="sum-card" href="#sintese"><span class="sum-top"><span class="sum-num">VI</span></span><span class="sum-title">Síntese</span><span class="sum-sub">A grande inversão do Reino</span></a></div>
     </header>
@@ -250,6 +282,7 @@ footer{max-width:720px;text-align:center;font-family:var(--ui);font-size:.8rem;c
 <section id="referencias" class="chapter refs"><header class="sec-head"><h2>Referências Bibliográficas</h2><div class="ornament" aria-hidden="true"><span></span>✦<span></span></div></header><h3 class="ref-h">Obras citadas</h3><p class="bib">BAILEY, Kenneth E. Jesus pela ótica do Oriente Médio: estudos culturais sobre os Evangelhos. São Paulo: Vida Nova.</p><p class="bib">BARCLAY, William. Mateus.</p><p class="bib">CARSON, D. A. O Comentário de Mateus. São Paulo: Vida Nova/Shedd Publicações.</p><p class="bib">CULPEPPER, R. Alan. The People of the Parables: Galilee in the Time of Jesus. Louisville: Westminster John Knox Press, 2024.</p><p class="bib">FRANCE, R. T. The Gospel of Matthew. Grand Rapids: William B. Eerdmans Publishing Company, 2007. [New International Commentary on the New Testament].</p><p class="bib">KEENER, Craig S. Comentário Histórico-Cultural da Bíblia: Novo Testamento. Edição ampliada. São Paulo: Vida Nova.</p><p class="bib">LEE-BARNEWALL, Michelle. Surprised by the Parables: Growing in Grace through the Stories of Jesus. Bellingham, WA: Lexham Press, 2020. E-book, formato EPUB.</p><p class="bib">LOPES, Hernandes Dias. Mateus: Jesus, o Rei dos reis.</p><p class="bib">RYLE, J. C. Meditações no Evangelho de Mateus.</p><p class="bib">TASKER, R. V. G. Evangelho de Mateus: Introdução e Comentário.</p><p class="bib">WILLARD, Dallas. The Scandal of the Kingdom: How the Parables of Jesus Revolutionize Life with God. Prefácio de John Mark Comer. Zondervan, 2024. E-book, formato EPUB.</p><h3 class="ref-h">Fontes consultadas na preparação deste Estudo</h3><ul class="biblio"><li>OSBORNE, Grant R. Matthew [Zondervan Exegetical Commentary on the New Testament].</li><li>HAGNER, Donald A. Word Biblical Commentary, v. 33B, Matthew 14–28.</li><li>TURNER, David L. Matthew [Baker Exegetical Commentary on the New Testament].</li><li>RADMACHER, E.; ALLEN, R.; HOUSE, H. W. [org.].</li><li>O Novo Comentário Bíblico: Novo Testamento, Mateus. VANDE KAPPELLE, Robert P. Living Water: A Wisdom Approach to the Parables of Jesus. Eugene, OR: Wipf &amp; Stock, 2022.</li><li>ZIGABENOS, Euthymios. Commentary on the Holy Gospel of Matthew.</li></ul></section>
 
     <footer>
+      <div class="dl-row"><a class="dl-btn dl-primary" href="estudo-mateus-20.pdf" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 19h16"/></svg>Baixar o estudo em PDF</a><button class="dl-btn dl-ghost js-print" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4v-7h16v7h-2M8 14h8v7H8z"/></svg>Imprimir</button></div>
       <p>Estudos Expositivos · Mateus 20.1–34 · Arisvaldo Marinho Cunha</p>
       <p>Fundo musical: <em>Quiet Hope</em>.</p>
     </footer>
@@ -350,6 +383,8 @@ footer{max-width:720px;text-align:center;font-family:var(--ui);font-size:.8rem;c
   document.getElementById('fontUp').addEventListener('click', function(){ fs = Math.min(1.45, +(fs + .05).toFixed(2)); applyFs(); });
   document.getElementById('fontDown').addEventListener('click', function(){ fs = Math.max(.95, +(fs - .05).toFixed(2)); applyFs(); });
   document.getElementById('topBtn').addEventListener('click', function(){ window.scrollTo({top:0}); closeToc(); });
+
+  document.querySelectorAll('.js-print').forEach(function(b){ b.addEventListener('click', function(){ window.print(); }); });
 
   /* mobile toc */
   var toc = document.getElementById('toc'), tt = document.getElementById('tocToggle');

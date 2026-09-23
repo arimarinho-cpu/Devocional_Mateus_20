@@ -183,7 +183,7 @@ footer{max-width:720px;text-align:center;font-family:var(--ui);font-size:.8rem;c
   .scripture{padding:28px 20px 20px}
   .prayer{padding:28px 22px}
   .cards{grid-template-columns:1fr}
-  .p-vol,.p-sub{display:none}
+  .p-vol{display:none}
   .player{right:16px}
 }
 @media print{
@@ -261,12 +261,15 @@ footer{max-width:720px;text-align:center;font-family:var(--ui);font-size:.8rem;c
     <svg id="icPlay" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
     <svg id="icPause" viewBox="0 0 24 24" aria-hidden="true" style="display:none"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
   </button>
-  <div class="p-meta"><span class="p-title">Quiet Hope</span><span class="p-sub">Fundo musical</span></div>
+  <div class="p-meta"><span class="p-title">Quiet Hope</span><span class="p-sub" id="pStatus">Fundo musical</span></div>
   <div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
   <input class="p-vol" id="vol" type="range" min="0" max="1" step="0.01" value="0.45" aria-label="Volume">
 </div>
 
-<audio id="bgm" src="audio/quiet-hope.mp3" preload="metadata" loop></audio>
+<audio id="bgm" preload="auto" loop playsinline>
+  <source src="trilha.mp3?v=4" type="audio/mpeg">
+  <source src="quiet-hope.mp3?v=4" type="audio/mpeg">
+</audio>
 
 <script>
 (function(){
@@ -299,13 +302,24 @@ footer{max-width:720px;text-align:center;font-family:var(--ui);font-size:.8rem;c
     icPause.style.display = on ? '' : 'none';
     playBtn.setAttribute('aria-label', on ? 'Pausar música' : 'Tocar música');
   }
+  var pStatus = document.getElementById('pStatus');
+  function status(msg){ pStatus.textContent = msg; }
   function play(){
-    audio.volume = 0;
+    audio.muted = false;
+    audio.volume = Math.max(target, 0.05);
+    status('Carregando...');
     var p = audio.play();
-    if(p && p.then){ p.then(function(){ setUI(true); fadeTo(target, 2500); }).catch(function(){ setUI(false); }); }
-    else { setUI(true); fadeTo(target, 2500); }
+    if(p && p.then){
+      p.then(function(){ setUI(true); status('Tocando'); audio.volume = 0; fadeTo(target, 2000); })
+       .catch(function(err){ setUI(false); status(err && err.name === 'NotAllowedError' ? 'Toque no botão para ouvir' : 'Erro ao carregar a música'); });
+    } else { setUI(true); status('Tocando'); }
   }
-  function pause(){ fadeTo(0, 700, function(){ audio.pause(); setUI(false); }); }
+  audio.addEventListener('error', function(){ status('Arquivo de música não encontrado'); }, true);
+  var srcs = audio.querySelectorAll('source');
+  if(srcs.length){ srcs[srcs.length-1].addEventListener('error', function(){ status('Arquivo de música não encontrado'); }); }
+  audio.addEventListener('waiting', function(){ status('Carregando...'); });
+  audio.addEventListener('playing', function(){ status('Tocando'); });
+  function pause(){ fadeTo(0, 700, function(){ audio.pause(); setUI(false); status('Pausado'); }); }
   playBtn.addEventListener('click', function(){ audio.paused ? play() : pause(); });
   vol.addEventListener('input', function(){ target = parseFloat(vol.value); clearInterval(fadeTimer); audio.volume = target; store.set('mt20-vol', target); });
   audio.addEventListener('pause', function(){ setUI(false); });
